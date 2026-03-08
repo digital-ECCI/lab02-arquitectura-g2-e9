@@ -3,8 +3,13 @@
 # Lab02 - Sumador/Restador de 4 bits
 
 # Integrantes
+<p align="center">
+ SAMUEL ALEJANDRO TINOCO PINEDA 
+<p align="center">
+CRISTIAN EDUARDO HUERTAS MORENO
+<p align="center">
+SARA GERALDINE MOSCOSO MOGOLLON
 
-dsfffffffffffffffffffffffffffffffffffffffffffff
 
 # Informe
 
