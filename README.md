@@ -31,7 +31,7 @@ Indice:
 ### 1. Simulación del sumador/restador
 
 #### 1.1 Descripción
-
+sed
 #### 1.2 Diagrama
 
 ## Evidencias de implementación
