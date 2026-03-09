@@ -54,6 +54,6 @@ https://github.com/user-attachments/assets/88ddf45a-61c7-49ad-ba85-487ef2f14ef1
 
 
 ## Conclusiones
-
+En conclusión, se validó con éxito el diseño del restador de 4 bits, confirmando que la lógica aritmética responde de forma precisa en todo el rango de valores. Las pruebas en GTKWave demostraron un manejo correcto del complemento a dos, comportamiento que fue ratificado mediante la implementación física en la FPGA, donde el sistema operó correctamente en hardware real, cumpliendo con todos los requisitos de diseño
 
 ## Referencias
