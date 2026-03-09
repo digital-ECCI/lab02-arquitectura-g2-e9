@@ -63,4 +63,3 @@ J. I. Odriozola, “Sumador Restador,” CircuitVerse, 2024.
 Saber 360°, “Somadores.” [Online]. Available:
 https://www.saber360.com.br/es/somadores
 
-[Accessed: 8-Mar-2026].
