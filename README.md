@@ -33,15 +33,21 @@ PIROBOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 
 ## Simulaciones 
 
-<img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/56bceae2-aef7-40e5-8f28-a470dbaeb1b5" />
 
 ### 1. Simulación del sumador/restador
 
 #### 1.1 Descripción
 sed
 #### 1.2 Diagrama
+<img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/56bceae2-aef7-40e5-8f28-a470dbaeb1b5" />
+
+#### 1.3 Diagrama
 
 ## Evidencias de implementación
+
+
+
+https://github.com/user-attachments/assets/88ddf45a-61c7-49ad-ba85-487ef2f14ef1
 
 
 ## Conclusiones
