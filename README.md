@@ -22,7 +22,7 @@ Indice:
 5. [Conclusiones](#conclusiones)
 6. [Referencias](#referencias)
 
-## Documentación del diseño implementado
+### Documentación del diseño implementado
 
 # 1. Sumador/Restador 
 ## 1.1 Descripción de módulos y código
