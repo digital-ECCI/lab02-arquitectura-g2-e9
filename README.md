@@ -59,3 +59,8 @@ En conclusión, se validó con éxito el diseño del restador de 4 bits, confirm
 ## Referencias
 J. I. Odriozola, “Sumador Restador,” CircuitVerse, 2024.
 [Online]. Available: https://circuitverse.org/users/237192/projects/sumador-restador-e2329d28-c542-4b2a-9111-91a759e6554c
+
+Saber 360°, “Somadores.” [Online]. Available:
+https://www.saber360.com.br/es/somadores
+
+[Accessed: 8-Mar-2026].
