@@ -41,7 +41,7 @@ sed
 #### 1.2 Diagrama
 
 
-#### 1.3 simulacion
+#### 1.3 simulacion_tb.v
 
 <img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/0d168afd-dd1c-466c-890a-a850e01c7cc5" />
 
