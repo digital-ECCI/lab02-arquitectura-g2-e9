@@ -45,10 +45,10 @@ sed
 
 <img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/0d168afd-dd1c-466c-890a-a850e01c7cc5" />
 
-
+La imagen muestra la verificación funcional de un módulo restador/sumador de 4 bits. El enfoque principal de este segmento de la simulación es validar la operación de resta mediante el barrido de valores en las entradas.
+Comportamiento en la Región de "Resta Negativa"
+Interpretación: La transición de la salida hacia valores como F, E y D confirma que el diseño maneja correctamente el desbordamiento (underflow) y representa los números negativos de forma estándar para sistemas digitales.
 ## Evidencias de implementación
-
-
 
 https://github.com/user-attachments/assets/88ddf45a-61c7-49ad-ba85-487ef2f14ef1
 
