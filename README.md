@@ -39,9 +39,11 @@ PIROBOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
 #### 1.1 Descripción
 sed
 #### 1.2 Diagrama
-<img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/56bceae2-aef7-40e5-8f28-a470dbaeb1b5" />
 
-#### 1.3 Diagrama
+
+#### 1.3 simulacion
+
+img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/56bceae2-aef7-40e5-8f28-a470dbaeb1b5" />
 
 ## Evidencias de implementación
 
