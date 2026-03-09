@@ -205,7 +205,7 @@ El diagrama implementa dos etapas para asegurar siempre un resultado positivo. E
 ![sumres_completo_page-0001](https://github.com/user-attachments/assets/4c2c5f8b-01a7-4f2f-8f79-e28536ac6036)
 
 #### 1.1 Descripción
-sed
+El diagrama RTL generado ilustra una arquitectura de dos etapas diseñada para obtener la magnitud absoluta en operaciones aritméticas. El primer módulo (uut) ejecuta la operación principal entre las entradas, generando un resultado intermedio y una señal de acarreo (co_tb). Para gestionar adecuadamente los resultados negativos, una lógica combinacional intermedia (comb) evalúa dicha señal junto con el selector de operación (sel). Si se detecta una resta con resultado negativo, esta lógica activa el segundo módulo (uut1), el cual corrige el valor intermedio aplicando el complemento a dos para entregar únicamente la magnitud absoluta en la salida final (salida), garantizando una
 #### 1.2 Diagrama
 
 
