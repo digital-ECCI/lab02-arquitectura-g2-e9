@@ -25,7 +25,7 @@ Indice:
 ## Documentación del diseño implementado
 
 ### 1. Sumador/Restador
-En el siguiente documento se detalla la validación funcional del restador de 4 bits mediante
+En el siguiente documento, se explicarán los códigos implementados para un restador de 4 bits. Así mismo, se detallará su funcionamiento lógico y el análisis de las simulaciones en GTKWave, verificando la precisión de la salida frente a las variaciones del sustraendo y la gestión de números negativos para su posterior implementación en la FPGA.
 #### 1.1 Descripción
 
 #### 1.2 Diagramas
