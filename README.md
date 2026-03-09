@@ -25,7 +25,7 @@ Indice:
 ## Documentación del diseño implementado
 
 ### 1. Sumador/Restador
-PIROBOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOS
+En el siguiente documento se detalla la validación funcional del restador de 4 bits mediante
 #### 1.1 Descripción
 
 #### 1.2 Diagramas
