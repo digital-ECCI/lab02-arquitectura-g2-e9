@@ -24,12 +24,179 @@ Indice:
 
 ## Documentación del diseño implementado
 
-### 1. Sumador/Restador
-En el siguiente documento, se explicarán los códigos implementados para un restador de 4 bits. Así mismo, se detallará su funcionamiento lógico y el análisis de las simulaciones en GTKWave, verificando la precisión de la salida frente a las variaciones del sustraendo y la gestión de números negativos para su posterior implementación en la FPGA.
-#### 1.1 Descripción
+# 1. Sumador/Restador 
+## 1.1 Descripción de módulos y código
 
-#### 1.2 Diagramas
+El sistema implementa módulos que forman un sumador/restador de 4 bits capaz de resolver números negativos y devolver el valor. A continuación, se detalla el código y el funcionamiento linea por linea de cada uno de los módulos que componen el sumador/restador. 
 
+---
+
+### Módulo 1: Sumador de 1 bit (sum.v)
+
+Este es el bloque principial del diseño. Calcula la suma de dos bits individuales considerando un acarreo de entrada. 
+
+```verilog
+module sum (
+input a, input b, input ci, output so,output co
+);
+
+assign so = ci^(a^b);
+assign co = (ci&(a^b))|(a&b);
+
+endmodule
+```
+### Explicación del código: 
+
+- `module sum`: Se define el nombre del módulo, las entradas de 1 bit (`a`, `b`,`ci` que es el acarreo de entrada) y dos salidas de 1 bit (`so` para la suma, `co` para el acarreo de salida).
+
+- `assign so = ci^(a^b)`: La asignación define la suma con un operador `^` XOR. 
+
+- `assign co = (ci&(a^b))|(a&b)`: La asignación define el acarreo de salida. Se activa si al menos dos de las tres entradas son un "1" lógico. 
+
+### Módulo 2: Sumador completo de 4 bits (sum_compt)
+
+Este módulo agrupa cuatro sumadores de 1 bit en cascada para procesar numeros de 4 bits. 
+
+```verilog
+module sum_compt(
+input  [3:0] a_tb,
+input  [3:0] b_tb,
+input  ci_tb,
+output [3:0] so_tb,
+output co_tb
+);
+
+wire ci0, ci1, ci2;
+
+sum uut(
+.a(a_tb[0]),
+.b(b_tb[0]),
+.ci(ci_tb),
+.so(so_tb[0]),
+.co(ci0)
+);
+
+sum uut1(
+.a(a_tb[1]),
+.b(b_tb[1]),
+.ci(ci0),
+.so(so_tb[1]),
+.co(ci1)
+);
+
+sum uut2(
+.a(a_tb[2]),
+.b(b_tb[2]),
+.so(so_tb[2]),
+.ci(ci1),
+.co(ci2)
+);
+
+sum uut3(
+.a(a_tb[3]),
+.b(b_tb[3]),
+.so(so_tb[3]),
+.ci(ci2),
+.co(co_tb)
+);
+
+endmodule
+```
+### Explicación del código: 
+
+- `input [3:0] a_tb, output [3:0] so_tb`:Define los vectores de 4 bits para las entradas y la salida de suma.
+
+- `wire ci0, ci1, ci2`: Declara cables lógicos.
+
+- `sum uut(), sum uut1()`: Son las instanciaciones del módulo `sum` de 1 bit.
+
+### Módulo 3: Sumador/Restador (restador.v)
+
+Este módulo implementa la lógica necesaria para restar números utilizando el complemento a 2, controlada por una señal selectora. 
+
+```verilog
+module restador(
+input  [3:0] a_tb,
+input  sel,
+input [3:0] b_tb,
+output [3:0] so_tb,
+output co_tb
+);
+
+sum_compt uut(
+.a_tb(a_tb),    
+.ci_tb(sel),
+.b_tb({4{sel}}^b_tb),
+.so_tb(so_tb),
+.co_tb(co_tb)
+);
+
+endmodule
+```
+###Explicación del coódigo: 
+
+- `input sel`: Se añade una nueva entrada de 1 bit que actúa como selector de operación (0 = suma y 1 = resta). 
+
+- `sum_compt uut()`: Se instancia el sumador de 4 bits explicado en el paso anterior. 
+
+- `.ci_tb(sel)`: Conecta el selector directamente al acarreo de entrada del sumador. Si es resta (sel = 1), suma un 1 inicial, lo cual es el primer paso del complemento a 2. 
+
+- `.b_tb({4{sel}}^b_tb)`: Esta linea es muy importante. `{4{sel}}` esta parte replica el valor de `sel` cuatro veces. Luego aplica el operador XOR nivel de bits (`^`) con `b_tb`. 
+
+  - Si `sel = 0` (suma): `0000 ^ b_tb` deja pasar a b_tb intacto. 
+
+  - Si `sel = 1` (suma): `1111 ^ b_tb` (complemento a 1). Sumando al `ci_tb = 1` del paso anterior, se logra el complemento a 2. 
+
+### Módulo 4: Módulo final (restador_sumador_completo.v)
+
+Este módulo implementa la lógica para restar números utilizando el complemento a 2, controlada por una señal selectora. 
+
+```verilog
+module restador_sumador_completo(
+input  [3:0] a_tb,
+input  sel,
+input [3:0] b_tb,
+output [3:0] salida,
+output co
+);
+
+ wire [3:0] b_tb1;
+ wire co1,sel2;
+
+restador uut(
+.a_tb(a_tb), 
+.b_tb(b_tb),     
+.sel(sel),  
+.so_tb(b_tb1), 
+.co_tb(co1)
+); 
+
+restador uut1(
+    .a_tb(4'b0000),       
+    .sel(sel & (~co1)),   
+    .b_tb(b_tb1),         
+    .so_tb(salida),
+    .co_tb(co)
+);
+
+endmodule
+```
+
+### Explicación del código
+
+- `restador uut()`: Ejecuta la primera operación (A+B o A-B). El resultado se guarda en el cable temporal `b_tb1`.
+
+- `.sel(sel & (~co1))`: Lógica de control, será `1` si la operación original es una resta (`sel = 1`). Y si el resultado dio negativo se arroja un acarreo `~co1` que invierte el 0 a 1. 
+
+
+## 1.2 Diagramas
+
+### Restador
+El diagrama utiliza la señal `sel` para elegir entre suma (0) o resta (1). En la suma, las compuertas XOR dejan pasar el dato `b_tb` intacto al sumador central. En la resta, las XOR invierten `b_tb` (complemento a 1) y `sel` ingresa como acarreo inicial (`ci_tb=1`), completando el complemento a 2 necesario para entregar la resta correcta en `so_tb`.
+
+### Sumador/restador completo
+
+El diagrama implementa dos etapas para asegurar siempre un resultado positivo. El primer bloque (`uut`) ejecuta la operación inicial. Si se solicitó una resta y el resultado da negativo (indicado por un acarreo `co_tb = 0`), la compuerta AND central lo detecta y activa el segundo bloque (`uut1`). Este último invierte nuevamente el número en complemento a 2, entregando la magnitud absoluta final en `salida`.
 
 ## Simulaciones 
 
