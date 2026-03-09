@@ -43,7 +43,8 @@ sed
 
 #### 1.3 simulacion
 
-img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/56bceae2-aef7-40e5-8f28-a470dbaeb1b5" />
+<img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/0d168afd-dd1c-466c-890a-a850e01c7cc5" />
+
 
 ## Evidencias de implementación
 
