@@ -53,54 +53,34 @@ endmodule
 
 - `assign co = (ci&(a^b))|(a&b)`: La asignación define el acarreo de salida. Se activa si al menos dos de las tres entradas son un "1" lógico. 
 
-### Módulo 2: Sumador completo de 4 bits (sum_compt)
+### Módulo 2: Módulo Restador de 4 bits
 
-Este módulo agrupa cuatro sumadores de 1 bit en cascada para procesar numeros de 4 bits. 
+Este módulo implementa un sumador/restador combinacional de 4 bits. Utiliza la lógica de complemento a dos para realizar la resta mediante un sumador estándar, optimizando el uso de hardware.
 
 ```verilog
-module sum_compt(
+`include "sum_compt.v"
+module restador(
+
 input  [3:0] a_tb,
-input  [3:0] b_tb,
-input  ci_tb,
+input  sel,
+input [3:0] b_tb,
 output [3:0] so_tb,
 output co_tb
 );
 
-wire ci0, ci1, ci2;
 
-sum uut(
-.a(a_tb[0]),
-.b(b_tb[0]),
-.ci(ci_tb),
-.so(so_tb[0]),
-.co(ci0)
+sum_compt uut(
+.a_tb(a_tb),    
+.ci_tb(sel),    
+.b_tb({4{sel}}^b_tb),
+.so_tb(so_tb),
+.co_tb(co_tb)
 );
 
-sum uut1(
-.a(a_tb[1]),
-.b(b_tb[1]),
-.ci(ci0),
-.so(so_tb[1]),
-.co(ci1)
-);
 
-sum uut2(
-.a(a_tb[2]),
-.b(b_tb[2]),
-.so(so_tb[2]),
-.ci(ci1),
-.co(ci2)
-);
-
-sum uut3(
-.a(a_tb[3]),
-.b(b_tb[3]),
-.so(so_tb[3]),
-.ci(ci2),
-.co(co_tb)
-);
 
 endmodule
+
 ```
 ### Explicación del código: 
 
@@ -135,17 +115,23 @@ endmodule
 ```
 ###Explicación del coódigo: 
 
-- `input sel`: Se añade una nueva entrada de 1 bit que actúa como selector de operación (0 = suma y 1 = resta). 
+Este diseño es un "2 por 1": usa un sumador para hacer restas aplicando un truco matemático. Así funciona cada parte:
 
-- `sum_compt uut()`: Se instancia el sumador de 4 bits explicado en el paso anterior. 
+input sel: Es el interruptor maestro. Si vale 0, el circuito suma. Si vale 1, el circuito resta.
 
-- `.ci_tb(sel)`: Conecta el selector directamente al acarreo de entrada del sumador. Si es resta (sel = 1), suma un 1 inicial, lo cual es el primer paso del complemento a 2. 
+sum_compt uut(): Es el motor del circuito. Reutilizamos el sumador de 4 bits que ya teníamos construido.
 
-- `.b_tb({4{sel}}^b_tb)`: Esta linea es muy importante. `{4{sel}}` esta parte replica el valor de `sel` cuatro veces. Luego aplica el operador XOR nivel de bits (`^`) con `b_tb`. 
+.ci_tb(sel): Conectamos el selector al acarreo de entrada.
 
-  - Si `sel = 0` (suma): `0000 ^ b_tb` deja pasar a b_tb intacto. 
+Si vamos a restar (sel = 1), este "1" entra al sumador. Es el primer paso para convertir un número en negativo.
 
-  - Si `sel = 1` (suma): `1111 ^ b_tb` (complemento a 1). Sumando al `ci_tb = 1` del paso anterior, se logra el complemento a 2. 
+.b_tb({4{sel}}^b_tb): Esta es la "magia" del circuito. El símbolo ^ es una compuerta XOR:
+
+Si sel = 0 (Suma): El número b_tb pasa tal cual, sin cambios.
+
+Si sel = 1 (Resta): El número b_tb se invierte por completo (los 0 se vuelven 1 y viceversa).
+
+En resumen: Cuando quieres restar, el circuito invierte los bits de b_tb y le suma un 1 (gracias al ci_tb). Matemáticamente, esto convierte la suma en una resta usando el método de complemento a 2.
 
 ### Módulo 4: Módulo final (restador_sumador_completo.v)
 
