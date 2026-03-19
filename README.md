@@ -53,44 +53,8 @@ endmodule
 
 - `assign co = (ci&(a^b))|(a&b)`: La asignación define el acarreo de salida. Se activa si al menos dos de las tres entradas son un "1" lógico. 
 
-### Módulo 2: Módulo Restador de 4 bits
 
-Este módulo implementa un sumador/restador combinacional de 4 bits. Utiliza la lógica de complemento a dos para realizar la resta mediante un sumador estándar, optimizando el uso de hardware.
-
-```verilog
-`include "sum_compt.v"
-module restador(
-
-input  [3:0] a_tb,
-input  sel,
-input [3:0] b_tb,
-output [3:0] so_tb,
-output co_tb
-);
-
-
-sum_compt uut(
-.a_tb(a_tb),    
-.ci_tb(sel),    
-.b_tb({4{sel}}^b_tb),
-.so_tb(so_tb),
-.co_tb(co_tb)
-);
-
-
-
-endmodule
-
-```
-### Explicación del código: 
-
-- `input [3:0] a_tb, output [3:0] so_tb`:Define los vectores de 4 bits para las entradas y la salida de suma.
-
-- `wire ci0, ci1, ci2`: Declara cables lógicos.
-
-- `sum uut(), sum uut1()`: Son las instanciaciones del módulo `sum` de 1 bit.
-
-### Módulo 3: Sumador/Restador (restador.v)
+### Módulo 2: Sumador/Restador (restador.v)
 
 Este módulo implementa la lógica necesaria para restar números utilizando el complemento a 2, controlada por una señal selectora. 
 
