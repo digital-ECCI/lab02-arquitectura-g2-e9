@@ -137,43 +137,6 @@ En resumen: Cuando quieres restar, el circuito invierte los bits de b_tb y le su
 
 Este módulo implementa la lógica para restar números utilizando el complemento a 2, controlada por una señal selectora. 
 
-```verilog
-module restador_sumador_completo(
-input  [3:0] a_tb,
-input  sel,
-input [3:0] b_tb,
-output [3:0] salida,
-output co
-);
-
- wire [3:0] b_tb1;
- wire co1,sel2;
-
-restador uut(
-.a_tb(a_tb), 
-.b_tb(b_tb),     
-.sel(sel),  
-.so_tb(b_tb1), 
-.co_tb(co1)
-); 
-
-restador uut1(
-    .a_tb(4'b0000),       
-    .sel(sel & (~co1)),   
-    .b_tb(b_tb1),         
-    .so_tb(salida),
-    .co_tb(co)
-);
-
-endmodule
-```
-
-### Explicación del código
-
-- `restador uut()`: Ejecuta la primera operación (A+B o A-B). El resultado se guarda en el cable temporal `b_tb1`.
-
-- `.sel(sel & (~co1))`: Lógica de control, será `1` si la operación original es una resta (`sel = 1`). Y si el resultado dio negativo se arroja un acarreo `~co1` que invierte el 0 a 1. 
-
 
 ## 1.2 Diagramas
 
