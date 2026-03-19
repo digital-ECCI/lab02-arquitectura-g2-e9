@@ -97,11 +97,6 @@ Si vamos a restar (sel = 1), este "1" entra al sumador. Es el primer paso para c
 
 En resumen: Cuando quieres restar, el circuito invierte los bits de b_tb y le suma un 1 (gracias al ci_tb). Matemáticamente, esto convierte la suma en una resta usando el método de complemento a 2.
 
-### Módulo 4: Módulo final (restador_sumador_completo.v)
-
-Este módulo implementa la lógica para restar números utilizando el complemento a 2, controlada por una señal selectora. 
-
-
 ## 1.2 Diagramas
 
 ### Restador
@@ -122,9 +117,10 @@ El diagrama RTL generado ilustra una arquitectura de dos etapas. El primer módu
 
 #### 1.3 simulacion_tb.v
 
-<img width="1918" height="638" alt="simulacion_TB" src="https://github.com/user-attachments/assets/0d168afd-dd1c-466c-890a-a850e01c7cc5" />
+<img width="1643" height="345" alt="Captura de pantalla 2026-03-19 011941" src="https://github.com/user-attachments/assets/7aff991f-0d59-47ae-b4d9-a9555d2d6000" />
 
-La imagen muestra la verificación funcional de un módulo restador/sumador de 4 bits. El enfoque principal de este segmento de la simulación es validar la operación de resta mediante el barrido de valores en las entradas.
+
+La imagen muestra la verificación funcional de un módulo restador/sumador. El enfoque principal de este segmento de la simulación es validar la operación de resta mediante el barrido de valores en las entradas.
 Comportamiento en la Región de "Resta Negativa"
 Interpretación: La transición de la salida hacia valores como F, E y D confirma que el diseño maneja correctamente el desbordamiento (underflow) y representa los números negativos de forma estándar para sistemas digitales.
 ## Evidencias de implementación
