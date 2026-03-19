@@ -117,19 +117,19 @@ endmodule
 
 Este diseño es un "2 por 1": usa un sumador para hacer restas aplicando un truco matemático. Así funciona cada parte:
 
-input sel: Es el interruptor maestro. Si vale 0, el circuito suma. Si vale 1, el circuito resta.
+`input sel`: Es el interruptor maestro. Si vale 0, el circuito suma. Si vale 1, el circuito resta.
 
-sum_compt uut(): Es el motor del circuito. Reutilizamos el sumador de 4 bits que ya teníamos construido.
+`sum_compt uut():` Es el motor del circuito. Reutilizamos el sumador de 4 bits que ya teníamos construido.
 
-.ci_tb(sel): Conectamos el selector al acarreo de entrada.
+`.ci_tb(sel):` Conectamos el selector al acarreo de entrada.
 
 Si vamos a restar (sel = 1), este "1" entra al sumador. Es el primer paso para convertir un número en negativo.
 
-.b_tb({4{sel}}^b_tb): Esta es la "magia" del circuito. El símbolo ^ es una compuerta XOR:
+`.b_tb({4{sel}}^b_tb):` Esta es la "magia" del circuito. El símbolo ^ es una compuerta XOR:
 
-Si sel = 0 (Suma): El número b_tb pasa tal cual, sin cambios.
+`Si sel = 0 (Suma):` El número b_tb pasa tal cual, sin cambios.
 
-Si sel = 1 (Resta): El número b_tb se invierte por completo (los 0 se vuelven 1 y viceversa).
+`Si sel = 1 (Resta):` El número b_tb se invierte por completo (los 0 se vuelven 1 y viceversa).
 
 En resumen: Cuando quieres restar, el circuito invierte los bits de b_tb y le suma un 1 (gracias al ci_tb). Matemáticamente, esto convierte la suma en una resta usando el método de complemento a 2.
 
@@ -142,10 +142,6 @@ Este módulo implementa la lógica para restar números utilizando el complement
 
 ### Restador
 El diagrama utiliza la señal `sel` para elegir entre suma (0) o resta (1). En la suma, las compuertas XOR dejan pasar el dato `b_tb` intacto al sumador central. En la resta, las XOR invierten `b_tb` (complemento a 1) y `sel` ingresa como acarreo inicial (`ci_tb=1`), completando el complemento a 2 necesario para entregar la resta correcta en `so_tb`.
-
-### Sumador/restador completo
-
-El diagrama implementa dos etapas para asegurar siempre un resultado positivo. El primer bloque (`uut`) ejecuta la operación inicial. Si se solicitó una resta y el resultado da negativo (indicado por un acarreo `co_tb = 0`), la compuerta AND central lo detecta y activa el segundo bloque (`uut1`). Este último invierte nuevamente el número en complemento a 2, entregando la magnitud absoluta final en `salida`.
 
 ## Simulaciones 
 
